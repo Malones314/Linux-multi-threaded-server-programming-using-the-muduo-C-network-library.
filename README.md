@@ -117,6 +117,17 @@ private:
 1. 将变量放入寄存器
 2. 将寄存器中的值加一
 3. 将寄存器中的值写回主存
+
+#### 使用shared_ptr/weak_ptr解决问题
+##### shared_ptr/weak_ptr 有几个关键点：
+1. shared_ptr 控制对象的生命期。shared_ptr是强引用，只要有一个指向x对象的 shared_ptr 存在，该x对象就不会被析构。当最后一个指向对象x的最后一个 shared_ptr 析构或者reset()的时候，x保证被销毁。
+
+2. weak_ptr 不控制对象的生命期，但知道对象是否还活着。如果对象还活着，可以提升(promote)为 shared_ptr，如果对象死了，提升失败，返回一个空的 shared_ptr。提升/lock()是线程安全的。
+
+3. shared_ptr/weak_ptr 在主流平台是原子操作，没有用锁，性能好
+
+4. shared_ptr/weak_ptr 安全级别与string和STL容器一样
+
 ### Qt中的线程安全
 
 #### Qt中线程遇到死锁怎么办
