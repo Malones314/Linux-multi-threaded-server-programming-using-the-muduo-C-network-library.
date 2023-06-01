@@ -127,6 +127,10 @@ private:
 3. shared_ptr/weak_ptr 在主流平台是原子操作，没有用锁，性能好
 
 4. shared_ptr/weak_ptr 安全级别与string和STL容器一样
+即：
+  4.1 一个shared_ptr对象实体可以被多个线程同时读取
+  4.2 两个shared_ptr对象实体可以被两个线程同时写入（析构算“写”）
+  4.3 如果要从多个线程读写同一个shared_ptr对象，要加锁。
 
 ### Qt中的线程安全
 
